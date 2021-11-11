@@ -1,4 +1,4 @@
-<include a CircleCI status badge, here>
+[![CircleCI](https://circleci.com/gh/ahosny333/udacity-project-microservice-kubernetes-/tree/main.svg?style=shield )](https://circleci.com/gh/ahosny333/udacity-project-microservice-kubernetes-/tree/main)
 
 ## Project Overview
 
