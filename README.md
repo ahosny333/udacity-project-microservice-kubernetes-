@@ -60,7 +60,7 @@ source .devops/bin/activate
     * Run `./upload_docker.sh` to upload the container to docker hub.
 4. Run via kubectl
     * Run `minikube start --driver=docker` to start minikube 
-    * if you got that errr "The "docker" driver should not be used with root privileges" that happened because minikube with docker driver run as root not allowed , so follow this [link](https://github.com/kubernetes/minikube/issues/7903) to create a new user, and run it with that user
+    * if you got that error "The docker driver should not be used with root privileges" that happened because minikube with docker driver run as root not allowed , so follow this [link](https://github.com/kubernetes/minikube/issues/7903) to create a new user, and run it with that user
     * Run `kubectl get pods` to see which pods are running.
     * Run `./run_kubernetes.sh`
     * Run `./make_prediction.sh` to make prediction and copy/paste the logging info at terminal to `output_txt_files/kubernetes_out.txt`
