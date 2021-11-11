@@ -1,1 +1,54 @@
 <paste log output from Kubernetes-mediated prediction, here>
+
+developer@ip-172-31-46-52:/home/ubuntu/udacity-project-microservice-kubernetes-$ minikube start --driver=docker
+😄  minikube v1.24.0 on Ubuntu 20.04
+✨  Using the docker driver based on user configuration
+👍  Starting control plane node minikube in cluster minikube
+🚜  Pulling base image ...
+🔥  Creating docker container (CPUs=2, Memory=2200MB) ...
+🐳  Preparing Kubernetes v1.22.3 on Docker 20.10.8 ...
+    ▪ Generating certificates and keys ...
+    ▪ Booting up control plane ...
+    ▪ Configuring RBAC rules ...
+🔎  Verifying Kubernetes components...
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+🌟  Enabled addons: storage-provisioner, default-storageclass
+🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+
+-----------------------------------
+developer@ip-172-31-46-52:/home/ubuntu/udacity-project-microservice-kubernetes-$ docker image ls
+REPOSITORY                             TAG             IMAGE ID       CREATED             SIZE
+ahmedhosny333/udacity-boston-housing   latest          3cbac6c13896   About an hour ago   1.36GB
+udacity-boston-housing                 latest          3cbac6c13896   About an hour ago   1.36GB
+gcr.io/k8s-minikube/kicbase            v0.0.28         e2a6c047bedd   5 weeks ago         1.08GB
+python                                 3.7.3-stretch   34a518642c76   2 years ago         929MB
+developer@ip-172-31-46-52:/home/ubuntu/udacity-project-microservice-kubernetes-$ ./run_kubernetes.sh
+pod/udacity-boston-housing created
+NAME                     READY   STATUS              RESTARTS   AGE
+udacity-boston-housing   0/1     ContainerCreating   0          0s
+error: unable to forward port because pod is not running. Current status=Pending
+developer@ip-172-31-46-52:/home/ubuntu/udacity-project-microservice-kubernetes-$ kubectl get pod
+NAME                     READY   STATUS    RESTARTS   AGE
+udacity-boston-housing   1/1     Running   0          52s
+developer@ip-172-31-46-52:/home/ubuntu/udacity-project-microservice-kubernetes-$ ./run_kubernetes.sh
+Error from server (AlreadyExists): pods "udacity-boston-housing" already exists
+NAME                     READY   STATUS    RESTARTS   AGE
+udacity-boston-housing   1/1     Running   0          60s
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+Handling connection for 8000
+
+------------------------------------
+ubuntu@ip-172-31-46-52:~/udacity-project-microservice-kubernetes-$ ./make_prediction.sh
+Port: 8000
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
+----------------------------
+developer@ip-172-31-46-52:/home/ubuntu/udacity-project-microservice-kubernetes-$ minikube delete
+🔥  Deleting "minikube" in docker ...
+🔥  Deleting container "minikube" ...
+🔥  Removing /home/developer/.minikube/machines/minikube ...
+💀  Removed all traces of the "minikube" cluster.
