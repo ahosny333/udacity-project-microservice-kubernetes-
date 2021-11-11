@@ -35,6 +35,8 @@ python3 -m virtualenv --python=<path-to-Python3.7> .devops
 source .devops/bin/activate
 ```
 * Run `make install` to install the necessary dependencies
+* Install hadolint following the instructions, [on hadolint's page](https://github.com/hadolint/hadolint)
+* Run `make lint` to run lint checks on the project code and Dockerfile
 
 ### Running `app.py`
 
@@ -44,7 +46,22 @@ source .devops/bin/activate
 
 ### Kubernetes Steps
 
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
+1. Setup and Configure Docker locally
+    * install docker as described in the [link](https://docs.docker.com/engine/install/ubuntu/).
+    * verify that you’ve successfully installed docker by printing its version : `docker --version` 
+    * Run `./run_docker.sh`
+    * Run `./make_prediction.sh` to make prediction and copy/paste the logging info at terminal to `output_txt_files/docker_out.txt`
+2. Setup and Configure Kubernetes locally
+    *  install kubectl that allows you to run commands against Kubernetes clusters from [here](https://kubernetes.io/docs/tasks/tools/#install-kubectl-on-linux)
+    * Run `curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64`
+    * Run `sudo install minikube-linux-amd64 /usr/local/bin/minikube`
+3. Create Flask app in Container
+    * Run `./run_docker.sh` to build and start the Flask app container. 
+    * Run `./upload_docker.sh` to upload the container to docker hub.
+4. Run via kubectl
+    * Run `minikube start --driver=docker` to start minikube 
+    * if you got that errr "The "docker" driver should not be used with root privileges" that happened because minikube with docker driver run as root not allowed , so follow this [link](https://github.com/kubernetes/minikube/issues/7903) to create a new user, and run it with that user
+    * Run `kubectl get pods` to see which pods are running.
+    * Run `./run_kubernetes.sh`
+    * Run `./make_prediction.sh` to make prediction and copy/paste the logging info at terminal to `output_txt_files/kubernetes_out.txt`
+   
